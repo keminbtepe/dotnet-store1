@@ -1,5 +1,6 @@
 using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_store.Controllers;
 
@@ -13,10 +14,22 @@ public class UrunController : Controller
 
     public ActionResult Index()
     {
-        return View();
+        var urunler = _context.Urunler.Select(i => new UrunGetModel
+        {
+            Id = i.Id,
+            UrunAdi = i.UrunAdi,
+            Fiyat = i.Fiyat,
+            Resim = i.Resim,
+            Aktif = i.Aktif,
+            Anasayfa = i.Anasayfa,
+            KategoriAdi = i.Kategori.KategoriAdi
+
+        }).ToList();
+
+        return View(urunler);
     }
 
-    public ActionResult List(string url,string q)
+    public ActionResult List(string url, string q)
     {
         var query = _context.Urunler.Where(i => i.Aktif).AsQueryable(); // bu komut üzerinden filtreleme yapmamýzý saðlar
 
@@ -57,4 +70,16 @@ public class UrunController : Controller
             .ToList();
         return View(urun);
     }
+
+    public ActionResult Urunekle()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult Urunekle(int a)
+    {
+        return View();
+    }
 }
+

@@ -1,4 +1,4 @@
-﻿@model List<Kategori>
+﻿@model List<KategoriGetModels>
 
 @{
     Layout = "_AdminLayout";
@@ -10,7 +10,7 @@
                 <div class="card shadow">
                     <div class="card-header py-1 d-flex justify-content-between align-items-center">
                         <h5 class="card-title">Kategoriler</h5>
-                        <a asp-controller="Kategori" asp-action="KategoriEkle" class="btn btn-sm btn-primary">
+                        <a asp-controller="Kategori" asp-action="Create" class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-plus"></i>
                         </a>
                     </div>
@@ -33,7 +33,7 @@
                                         <td>@kategori.Id</td>
                                         <td>@kategori.KategoriAdi</td>
                                         <td>@kategori.Url</td>
-                                        <td>@kategori.Uruns.Count</td>
+                                        <td>@kategori.UrunSayisi</td>
                                         <td>
                                             <a href="kategori-ekle.html" class="btn btn-primary btn-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>

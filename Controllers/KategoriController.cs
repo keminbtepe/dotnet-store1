@@ -1,6 +1,7 @@
 ﻿using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace dotnet_store.Controllers;
 
@@ -12,13 +13,36 @@ public class KategoriController : Controller
     {
         _context = context;
     }
-    public IActionResult KategoriEkle()
+    public ActionResult Create()
     {
         return View();
     }
-    public IActionResult Index()
+
+    [HttpPost]
+    public ActionResult Create(string kategoriAdi,string kategoriUrl)
     {
-        var kategoriler = _context.Kategoriler.Include(i => i.Uruns).ToList();
+        var atama = new Kategori
+        {
+            KategoriAdi = kategoriAdi,
+            Url = kategoriUrl
+        };
+
+        _context.Kategoriler.Add(atama);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+    public ActionResult Index()
+    {
+        //burada select yazmamıdaki sebep countunu veritabanından saydırmayıp aşırı yüklemeden kaçınmak
+        var kategoriler = _context.Kategoriler.Select(i => new KategoriGetModels
+        {
+            Id = i.Id,
+            KategoriAdi = i.KategoriAdi,
+            Url = i.Url,
+            UrunSayisi = i.Uruns.Count
+
+        }).ToList();
         return View(kategoriler);
     }
 
