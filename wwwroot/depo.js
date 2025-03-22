@@ -10,6 +10,7 @@
 $(document).on("click", ".DeleteDepoBtn", function () {
 
     // Sil Butonuna tıklayınca çalışacak kod
+     
 
     var butonunIdsi = $(this).data('kursatid');
       
@@ -19,6 +20,7 @@ $(document).on("click", ".DeleteDepoBtn", function () {
         type: 'DELETE',
         data: { id: butonunIdsi }, // Sil olduğu için Sile basılan butonun id si gidecek
         success: function (response) {
+             
 
             ListeSayfasiniGetir();
         },

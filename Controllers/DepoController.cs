@@ -6,14 +6,15 @@ namespace dotnet_store.Controllers;
 
 public class DepoController : Controller
 {
+    #region ctor
     private readonly DataContext db;
 
     public DepoController(DataContext context)
     {
         db = context;
     }
-
-
+    #endregion 
+     
 
 
     #region Views // Sayfalar
@@ -25,7 +26,7 @@ public class DepoController : Controller
     public async Task<IActionResult> List() // Depoların Listesinin olduğu parçalı sayfa (Parçalı görünüm yani layout'suz)
     {
         try
-        {
+        { 
             List<Depo> depolar = db.Depolar.ToList();
 
             return PartialView(depolar);
@@ -48,27 +49,29 @@ public class DepoController : Controller
     }
     #endregion
 
+
+
     #region Tasks // İşlemler
     [HttpPost]
-    public async Task<IActionResult> Save(Depo form) // Depo Ekleme işlemi
+    public async Task<IActionResult> Save(Depo form) // Depo Ekleme veya Güncelleme işlemi
     {
         try
         {
             if (form.DepoId > 0) // Id 0 dan büyükse güncelle
             {
-                Depo depo = db.Depolar.Find(form.DepoId);
+                Depo depo = db.Depolar.Find(form.DepoId); // Depoyu veritabanından çek
 
                 depo.Adi = form.Adi;
                 depo.Adres = form.Adres;
                 depo.Aktifmi = form.Aktifmi;
                 depo.YoneticiAdi = form.YoneticiAdi;
 
-                db.Depolar.Update(depo);
+                db.Depolar.Update(depo); // Depoyu veritabanında güncelle komutu ver
                 db.SaveChanges();
             }
             else // Id 0 ise yeni kayıt
             {
-                db.Depolar.Add(form);
+                db.Depolar.Add(form); // Depoyu yeni kayıt olarak ekle
                 db.SaveChanges();
             }
 
@@ -103,4 +106,3 @@ public class DepoController : Controller
     }
     #endregion
 }
-
