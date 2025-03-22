@@ -1,0 +1,48 @@
+﻿@model Depo
+
+<form id="DepoForm">
+
+    <input type="hidden" name="DepoId" value="@Model.DepoId"/>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Depo Adı</label>
+        <div class="col-sm-10">
+            <input type="text" name="Adi" class="form-control" value="@Model.Adi">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Adres</label>
+        <div class="col-sm-10">
+            <input type="text" name="Adres" class="form-control" value="@Model.Adres">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Yönetici Adı</label>
+        <div class="col-sm-10">
+            <input type="text" name="YoneticiAdi" class="form-control" value="@Model.YoneticiAdi">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Aktif Mi</label>
+        <div class="col-sm-10">
+
+            <select name="Aktifmi" class="form-control">
+
+                <!option value="true" @(Model.Aktifmi ? "selected" : "")> Aktif </!option>
+
+                <!option value="false" @(Model.Aktifmi ? "" : "selected")> Pasif </!option>
+
+            </select>
+
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-sm w-100 btn-success">
+        Kaydet
+    </button>
+
+</form>

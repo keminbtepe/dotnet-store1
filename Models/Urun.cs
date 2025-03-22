@@ -8,6 +8,11 @@ public class Urun
     public string? Aciklama { get; set; }
     public bool Aktif { get; set; }
     public bool Anasayfa { get; set; }
+
+
+    #region Kategori Include
     public int KategoriId { get; set; }
     public Kategori Kategori { get; set; } = null!;
+    #endregion
+
 }

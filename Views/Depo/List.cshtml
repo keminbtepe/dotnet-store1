@@ -1,0 +1,50 @@
+﻿@model List<Depo>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped mb-0">
+        <thead class="table-secondary">
+            <tr>
+                <th>Id</th>
+                <th>Depo Adı</th>
+                <th>Adres</th>
+                <th>Yönetici Adı</th>
+                <th>Durum</th>
+                <th style="width: 90px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var depo in Model)
+            {
+                <tr>
+                    <td>@depo.DepoId</td>
+                    <td>@depo.Adi</td>
+                    <td>@depo.Adres</td>
+                    <td>@depo.YoneticiAdi</td>
+                    <td>
+
+                        @if (depo.Aktifmi)
+                        {
+                            <span class="badge bg-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Pasif</span>
+                        } 
+
+                    </td>
+
+                    <td> 
+                        <a class="btn btn-sm btn-primary EditDepoBtn" data-kursatid="@depo.DepoId">
+                            Düzenle
+                        </a>
+                        <a class="btn btn-sm btn-primary DeleteDepoBtn" data-kursatid="@depo.DepoId">
+                            Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+             
+        </tbody>
+    </table>
+</div>

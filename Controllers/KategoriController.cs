@@ -13,6 +13,10 @@ public class KategoriController : Controller
     {
         _context = context;
     }
+     
+
+
+
     public ActionResult Create()
     {
         return View();

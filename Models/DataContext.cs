@@ -9,10 +9,12 @@ public class DataContext : DbContext
 
     }
     public DbSet<Urun> Urunler { get; set; }
-
+    
     public DbSet<Kategori> Kategoriler { get; set; }
 
     public DbSet<Slider> Sliderlar { get; set; }
+
+    public DbSet<Depo> Depolar { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

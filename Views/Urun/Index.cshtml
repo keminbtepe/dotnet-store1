@@ -1,4 +1,4 @@
-﻿@model List<UrunGetModel>
+﻿@model List<Urun>
 @{
     Layout = "_AdminLayout";
 }   @* layout *@
@@ -62,7 +62,7 @@
                                             <i class="fa-solid fa-circle-xmark text-danger"></i>
                                         </td>
                                     }
-                                    <td>@item.KategoriAdi</td>
+                                    <td>@item.Kategori.KategoriAdi</td>
                                     <td>
                                         <a href="#" class="btn btn-primary btn-sm">
                                             <i class="fa-solid fa-pen-to-square"></i>

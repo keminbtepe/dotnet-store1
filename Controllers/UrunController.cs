@@ -6,32 +6,39 @@ namespace dotnet_store.Controllers;
 
 public class UrunController : Controller
 {
-    private readonly DataContext _context;
+    private readonly DataContext db;
     public UrunController(DataContext context)
     {
-        _context = context;
+        db = context;
     }
 
     public ActionResult Index()
     {
-        var urunler = _context.Urunler.Select(i => new UrunGetModel
-        {
-            Id = i.Id,
-            UrunAdi = i.UrunAdi,
-            Fiyat = i.Fiyat,
-            Resim = i.Resim,
-            Aktif = i.Aktif,
-            Anasayfa = i.Anasayfa,
-            KategoriAdi = i.Kategori.KategoriAdi
+        var urunListesi = db.Urunler
+            .Include(i => i.Kategori)
+            .ToList();
 
-        }).ToList();
+        return View(urunListesi);
 
-        return View(urunler);
+
+        //var urunler = _context.Urunler.Select(i => new UrunGetModel
+        //{
+        //    Id = i.Id,
+        //    UrunAdi = i.UrunAdi,
+        //    Fiyat = i.Fiyat,
+        //    Resim = i.Resim,
+        //    Aktif = i.Aktif,
+        //    Anasayfa = i.Anasayfa,
+        //    KategoriAdi = i.Kategori.KategoriAdi
+
+        //}).ToList();
+
+        //return View(urunler);
     }
 
     public ActionResult List(string url, string q)
     {
-        var query = _context.Urunler.Where(i => i.Aktif).AsQueryable(); // bu komut üzerinden filtreleme yapmamýzý saðlar
+        var query = db.Urunler.Where(i => i.Aktif).AsQueryable(); // bu komut üzerinden filtreleme yapmamýzý saðlar
 
         if (!string.IsNullOrEmpty(url))
         {
@@ -57,27 +64,27 @@ public class UrunController : Controller
 
     {
         // var urun = _context.Urunler.FirstOrDefault(i => i.Id == id);
-        var urun = _context.Urunler.Find(id);
+        var urun = db.Urunler.Find(id);
 
         if (urun == null)
         {
             return RedirectToAction("List");
         }
 
-        ViewData["BenzerUrunler"] = _context.Urunler
+        ViewData["BenzerUrunler"] = db.Urunler
             .Where(i => i.Aktif && i.KategoriId == urun.KategoriId && i.Id != id)
             .Take(4)
             .ToList();
         return View(urun);
     }
 
-    public ActionResult Urunekle()
+    public ActionResult Urunkaydet()
     {
         return View();
     }
 
     [HttpPost]
-    public ActionResult Urunekle(int a)
+    public ActionResult Urunkaydet(int a)
     {
         return View();
     }
