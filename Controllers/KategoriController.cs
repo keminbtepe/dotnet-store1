@@ -23,12 +23,12 @@ public class KategoriController : Controller
     }
 
     [HttpPost]
-    public ActionResult Create(string kategoriAdi,string kategoriUrl)
+    public ActionResult Create(KategoriCreateModel model)
     {
         var atama = new Kategori
         {
-            KategoriAdi = kategoriAdi,
-            Url = kategoriUrl
+            KategoriAdi = model.KategoriAdi,
+            Url = model.Url
         };
 
         _context.Kategoriler.Add(atama);

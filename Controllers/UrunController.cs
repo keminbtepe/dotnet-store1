@@ -84,9 +84,23 @@ public class UrunController : Controller
     }
 
     [HttpPost]
-    public ActionResult Urunkaydet(int a)
+    public ActionResult Urunkaydet(UrunCreateModel model)
     {
-        return View();
+        var entity = new Urun()
+        {
+
+            UrunAdi = model.UrunAdi,
+            Aciklama = model.Aciklama,
+            Fiyat = model.Fiyat,
+            Aktif = model.Aktif,
+            KategoriId = model.KategoriId,
+            Resim = "1.jpeg"  //upload control kullanýlacak
+
+        };
+
+        db.Urunler.Add(entity);
+        db.SaveChanges();
+        return RedirectToAction("Index");
     }
 }
 
