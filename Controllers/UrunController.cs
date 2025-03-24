@@ -103,5 +103,6 @@ public class UrunController : Controller
         db.SaveChanges();
         return RedirectToAction("Index");
     }
+
 }
 

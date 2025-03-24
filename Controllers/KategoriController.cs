@@ -13,7 +13,7 @@ public class KategoriController : Controller
     {
         _context = context;
     }
-     
+
 
 
 
@@ -48,6 +48,44 @@ public class KategoriController : Controller
 
         }).ToList();
         return View(kategoriler);
+    }
+
+    public ActionResult Edit(int id)
+    {
+        var entity = _context.Kategoriler.Select(i => new KategoriEditModel
+        {
+
+            Id = i.Id,
+            KategoriAdi = i.KategoriAdi,
+            Url = i.Url
+
+        }).FirstOrDefault(i => i.Id == id);
+
+        return View(entity);
+    }
+    [HttpPost]
+    public ActionResult Edit(int id, KategoriEditModel model)
+    {
+        if (id != model.Id)
+        {
+            return NotFound();
+        }
+        
+        var entity = _context.Kategoriler.FirstOrDefault(i => i.Id == model.Id);
+
+        if (entity != null)
+        {
+            entity.KategoriAdi = model.KategoriAdi;
+            entity.Url = model.Url;
+
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        return View(model);
+
+
     }
 
 
