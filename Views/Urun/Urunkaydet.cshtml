@@ -49,9 +49,12 @@
                         <div class="col-sm-10">
                             <select asp-for="KategoriId" class="form-select">
                                 <option value="" selected>Seçiniz</option>
-                                <option value="1">Telefon</option>
-                                <option value="2">Telefon</option>
-                                <option value="3">Beyaz Eşya</option>
+
+                                @foreach (var kategori in ViewBag.Kategoriler)
+                                {
+                                    <option value="@kategori.Id">@kategori.KategoriAdi</option>
+                                }
+
                             </select>
                         </div>
                     </div>

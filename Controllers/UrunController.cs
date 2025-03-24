@@ -80,6 +80,7 @@ public class UrunController : Controller
 
     public ActionResult Urunkaydet()
     {
+        ViewBag.Kategoriler = db.Kategoriler.ToList();
         return View();
     }
 
