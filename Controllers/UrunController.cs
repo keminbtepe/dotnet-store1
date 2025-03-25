@@ -103,6 +103,59 @@ public class UrunController : Controller
         db.SaveChanges();
         return RedirectToAction("Index");
     }
+    public ActionResult UrunGuncelle(int id)
+    {
+        var sorgu = db.Urunler.Select(i => new UrunUpdateModel
+        {
+            Id = i.Id,
+            UrunAdi = i.UrunAdi,
+            Fiyat = i.Fiyat,
+            Resim = i.Resim,
+            Aciklama = i.Aciklama,
+            Aktif = i.Aktif,
+            Anasayfa = i.Anasayfa,
+            KategoriId = i.KategoriId
+
+
+        }).FirstOrDefault(i=> i.Id ==id);
+
+        ViewBag.Kategoriler = db.Kategoriler.ToList();
+
+
+
+        return View(sorgu);
+    }
+    [HttpPost]
+    public ActionResult UrunGuncelle(int id,UrunUpdateModel model)
+    {
+        if (id != model.Id)
+        {
+            return RedirectToAction("Index");
+        }
+
+        var sorgu = db.Urunler.FirstOrDefault(i => i.Id == model.Id);
+        var eskiurun = sorgu.UrunAdi;
+        if (sorgu != null)
+        {
+            sorgu.UrunAdi = model.UrunAdi;
+            sorgu.Fiyat = model.Fiyat;
+            //sorgu.Resim = model.Resim;
+            sorgu.Aciklama = model.Aciklama;
+            sorgu.Aktif = model.Aktif;
+            sorgu.Anasayfa = model.Anasayfa;
+            sorgu.KategoriId = model.KategoriId;
+
+            db.SaveChanges();
+
+            TempData["Mesaj"] = $"{eskiurun} ürünü {sorgu.UrunAdi} olarak baþarýyla güncellendi";   //tempdata farklý actionlarda kullanýlabilir
+
+
+            return RedirectToAction("Index");
+
+        }
+
+        return View(model);
+    }
 
 }
 

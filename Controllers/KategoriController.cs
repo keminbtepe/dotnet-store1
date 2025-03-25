@@ -72,13 +72,18 @@ public class KategoriController : Controller
         }
         
         var entity = _context.Kategoriler.FirstOrDefault(i => i.Id == model.Id);
+        var eskikategori = entity.KategoriAdi;
 
         if (entity != null)
         {
             entity.KategoriAdi = model.KategoriAdi;
             entity.Url = model.Url;
+            
 
             _context.SaveChanges();
+
+            TempData["Mesaj"] = $"{eskikategori} Kategorisi {entity.KategoriAdi} olarak başarıyla güncellendi";   //tempdata farklı actionlarda kullanılabilir
+
             return RedirectToAction("Index");
 
         }
