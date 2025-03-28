@@ -106,7 +106,7 @@ public class UrunController : Controller
                 Fiyat = model.Fiyat,
                 Aktif = model.Aktif,
                 KategoriId = model.KategoriId,
-                Resim = "1.jpeg"  //upload control kullanýlacak
+                Resim = filename  //upload control kullanýlacak
 
             };
 
@@ -121,7 +121,7 @@ public class UrunController : Controller
             Id = i.Id,
             UrunAdi = i.UrunAdi,
             Fiyat = i.Fiyat,
-            Resim = i.Resim,
+            ResimAdi = i.Resim,
             Aciklama = i.Aciklama,
             Aktif = i.Aktif,
             Anasayfa = i.Anasayfa,
@@ -137,8 +137,10 @@ public class UrunController : Controller
         return View(sorgu);
     }
     [HttpPost]
-    public ActionResult UrunGuncelle(int id,UrunUpdateModel model)
+    public async Task<ActionResult> UrunGuncelle(int id,UrunUpdateModel model)
     {
+
+
         if (id != model.Id)
         {
             return RedirectToAction("Index");
@@ -148,9 +150,23 @@ public class UrunController : Controller
         var eskiurun = sorgu.UrunAdi;
         if (sorgu != null)
         {
+
+
+            if (model.ResimDosyasi != null)
+            {
+                var fileName = Path.GetRandomFileName() + ".jpg";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img",fileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await model.ResimDosyasi!.CopyToAsync(stream);
+                }
+                sorgu.Resim = fileName;
+
+            }
+
             sorgu.UrunAdi = model.UrunAdi;
             sorgu.Fiyat = model.Fiyat;
-            //sorgu.Resim = model.Resim;
             sorgu.Aciklama = model.Aciklama;
             sorgu.Aktif = model.Aktif;
             sorgu.Anasayfa = model.Anasayfa;

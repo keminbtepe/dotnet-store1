@@ -27,7 +27,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+//app.MapStaticAssets();    //Root klasörüne eriþmemizi saglar ama sýkýþtýrarak eriþtirir uygulamaya çalýþtýrýp yeni bir dosya ekledigimizde bu iþlemin parçasý olmadýgýndan dolayý uyarý verir.
+
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "urunler_by_kategori",

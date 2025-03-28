@@ -16,7 +16,6 @@ public class KategoriController : Controller
 
 
 
-
     public ActionResult Create()
     {
         return View();
@@ -25,16 +24,20 @@ public class KategoriController : Controller
     [HttpPost]
     public ActionResult Create(KategoriCreateModel model)
     {
-        var atama = new Kategori
+        if (ModelState.IsValid)
         {
-            KategoriAdi = model.KategoriAdi,
-            Url = model.Url
-        };
+            var atama = new Kategori
+            {
+                KategoriAdi = model.KategoriAdi,
+                Url = model.Url
+            };
 
-        _context.Kategoriler.Add(atama);
-        _context.SaveChanges();
+            _context.Kategoriler.Add(atama);
+            _context.SaveChanges();
 
-        return RedirectToAction("Index");
+            return RedirectToAction("Index");
+        }
+        return View(model);
     }
     public ActionResult Index()
     {
@@ -70,27 +73,53 @@ public class KategoriController : Controller
         {
             return NotFound();
         }
-        
-        var entity = _context.Kategoriler.FirstOrDefault(i => i.Id == model.Id);
-        var eskikategori = entity.KategoriAdi;
 
-        if (entity != null)
+        if (ModelState.IsValid)  //eror mesajı koşulları saglanırsa içerisi çalışır yoksa çalışmaz
         {
-            entity.KategoriAdi = model.KategoriAdi;
-            entity.Url = model.Url;
-            
 
-            _context.SaveChanges();
 
-            TempData["Mesaj"] = $"{eskikategori} Kategorisi {entity.KategoriAdi} olarak başarıyla güncellendi";   //tempdata farklı actionlarda kullanılabilir
 
-            return RedirectToAction("Index");
+            var entity = _context.Kategoriler.FirstOrDefault(i => i.Id == model.Id);
+            var eskikategori = entity.KategoriAdi;
 
+            if (entity != null)
+            {
+                entity.KategoriAdi = model.KategoriAdi;
+                entity.Url = model.Url;
+
+
+                _context.SaveChanges();
+
+                TempData["Mesaj"] = $"{eskikategori} Kategorisi {entity.KategoriAdi} olarak başarıyla güncellendi";   //tempdata farklı actionlarda kullanılabilir
+
+                return RedirectToAction("Index");
+
+            }
         }
-
         return View(model);
 
 
+    }
+
+    public ActionResult Delete(int? id)
+    {
+
+        if (id == null) 
+        {
+            return RedirectToAction("Index");
+        }
+
+        var sorgu = _context.Kategoriler.Find(id);
+        var eski = sorgu.KategoriAdi;
+        if (sorgu != null) 
+        {
+            _context.Kategoriler.Remove(sorgu);
+            _context.SaveChanges();
+
+            TempData["Mesaj"] = $"{eski} Kategorisi başarıyla silindi";   //tempdata farklı actionlarda kullanılabilir
+
+        }
+        return RedirectToAction("Index");
     }
 
 

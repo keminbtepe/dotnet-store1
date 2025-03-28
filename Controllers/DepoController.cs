@@ -50,7 +50,7 @@ public class DepoController : Controller
     #endregion
 
 
-
+    
     #region Tasks // İşlemler
     [HttpPost]
     public async Task<IActionResult> Save(Depo form) // Depo Ekleme veya Güncelleme işlemi
