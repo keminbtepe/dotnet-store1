@@ -1,6 +1,7 @@
 using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace dotnet_store.Controllers;
 
@@ -85,19 +86,29 @@ public class UrunController : Controller
     }
 
     [HttpPost]
-    public ActionResult Urunkaydet(UrunCreateModel model)
+    public async Task<ActionResult> Urunkaydet(UrunCreateModel model)
     {
-        var entity = new Urun()
-        {
+        var filename = Path.GetRandomFileName + ".jpg";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", filename);
 
-            UrunAdi = model.UrunAdi,
-            Aciklama = model.Aciklama,
-            Fiyat = model.Fiyat,
-            Aktif = model.Aktif,
-            KategoriId = model.KategoriId,
-            Resim = "1.jpeg"  //upload control kullanýlacak
+        using (var stream = new FileStream(path, FileMode.Create))
+        { 
+            await model.Resim!.CopyToAsync(stream);
+        }
 
-        };
+
+
+            var entity = new Urun()
+            {
+
+                UrunAdi = model.UrunAdi,
+                Aciklama = model.Aciklama,
+                Fiyat = model.Fiyat,
+                Aktif = model.Aktif,
+                KategoriId = model.KategoriId,
+                Resim = "1.jpeg"  //upload control kullanýlacak
+
+            };
 
         db.Urunler.Add(entity);
         db.SaveChanges();
