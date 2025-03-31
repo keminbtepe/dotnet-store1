@@ -1,4 +1,4 @@
-﻿@model List<KategoriGetModels>
+﻿@model List<KategoriGetModel>
 
 @{
     Layout = "_AdminLayout";
@@ -41,7 +41,7 @@
                                             <a asp-controller="Kategori" asp-action="Edit" asp-route-id="@kategori.Id" class="btn btn-primary btn-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="urun.html" class="btn btn-primary btn-sm">
+                                            <a asp-controller="urun" asp-route-kategori="@kategori.Id" class="btn btn-primary btn-sm">
                                                 <i class="fa-solid fa-right-long"></i>
                                             </a>
                                             @if (kategori.UrunSayisi == 0)

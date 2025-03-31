@@ -12,6 +12,17 @@
                 </a>
             </div>
             <div class="card-body">
+
+                <form method="get">
+                    <div class="input-group mb-2">
+                        <select name="kategori" class="form-select" asp-items="ViewBag.Kategoriler">
+                            <option value="" selected>Hepsi</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped mb-0">
                         <thead class="table-secondary">

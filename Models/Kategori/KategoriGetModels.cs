@@ -1,6 +1,6 @@
 ﻿namespace dotnet_store.Models;
 
-public class KategoriGetModels
+public class KategoriGetModel
 {
     public int Id { get; set; }
     public string KategoriAdi { get; set; } = null!;

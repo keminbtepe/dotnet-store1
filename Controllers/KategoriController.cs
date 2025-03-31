@@ -42,7 +42,7 @@ public class KategoriController : Controller
     public ActionResult Index()
     {
         //burada select yazmamıdaki sebep countunu veritabanından saydırmayıp aşırı yüklemeden kaçınmak
-        var kategoriler = _context.Kategoriler.Select(i => new KategoriGetModels
+        var kategoriler = _context.Kategoriler.Select(i => new KategoriGetModel
         {
             Id = i.Id,
             KategoriAdi = i.KategoriAdi,

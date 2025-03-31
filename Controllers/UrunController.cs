@@ -1,5 +1,6 @@
 using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -13,31 +14,23 @@ public class UrunController : Controller
         db = context;
     }
 
-    public ActionResult Index()
+    public ActionResult Index(int? kategori)
     {
-        
-        var urunListesi = db.Urunler
+        var sorgu = db.Urunler.AsQueryable();   //asquerytable eger burada where yazmazsak diðer satýrlarda where yazmamýzý saðlar
+
+        if (kategori != null)
+        {
+            sorgu = sorgu.Where(i => i.KategoriId == kategori);
+        }
+        var urunListesi = sorgu
             .Include(i => i.Kategori)
             .ToList();
 
+        ViewBag.Kategoriler = new SelectList(db.Kategoriler.ToList(),"Id","KategoriAdi",kategori);  //dropdown listesi içindeki verileri çeker
+
         return View(urunListesi);
 
-
-        //var urunler = _context.Urunler.Select(i => new UrunGetModel
-        //{
-        //    Id = i.Id,
-        //    UrunAdi = i.UrunAdi,
-        //    Fiyat = i.Fiyat,
-        //    Resim = i.Resim,
-        //    Aktif = i.Aktif,
-        //    Anasayfa = i.Anasayfa,
-        //    KategoriAdi = i.Kategori.KategoriAdi
-
-        //}).ToList();
-
-        //return View(urunler);
     }
-
     public ActionResult List(string url, string q)
     {
         var query = db.Urunler.Where(i => i.Aktif).AsQueryable(); // bu komut üzerinden filtreleme yapmamýzý saðlar
