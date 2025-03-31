@@ -15,6 +15,7 @@ public class UrunController : Controller
 
     public ActionResult Index()
     {
+        
         var urunListesi = db.Urunler
             .Include(i => i.Kategori)
             .ToList();
@@ -88,27 +89,38 @@ public class UrunController : Controller
     [HttpPost]
     public async Task<ActionResult> Urunkaydet(UrunCreateModel model)
     {
-        var filename = Path.GetRandomFileName + ".jpg";
+        var filename = Path.GetRandomFileName() + ".jpeg";
         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", filename);
 
         using (var stream = new FileStream(path, FileMode.Create))
-        { 
+        {
             await model.Resim!.CopyToAsync(stream);
         }
 
+        //if (model.ResimDosyasi != null)
+        //{
+        //    var fileName = Path.GetRandomFileName() + ".jpg";
+        //    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
 
+        //    using (var stream = new FileStream(path, FileMode.Create))
+        //    {
+        //        await model.ResimDosyasi!.CopyToAsync(stream);
+        //    }
+        //    sorgu.Resim = fileName;
 
-            var entity = new Urun()
-            {
+        //}
 
-                UrunAdi = model.UrunAdi,
-                Aciklama = model.Aciklama,
-                Fiyat = model.Fiyat,
-                Aktif = model.Aktif,
-                KategoriId = model.KategoriId,
-                Resim = filename  //upload control kullanýlacak
+        var entity = new Urun()
+        {
 
-            };
+            UrunAdi = model.UrunAdi,
+            Aciklama = model.Aciklama,
+            Fiyat = model.Fiyat,
+            Aktif = model.Aktif,
+            KategoriId = model.KategoriId,
+            Resim = filename  //upload control kullanýlacak
+
+        };
 
         db.Urunler.Add(entity);
         db.SaveChanges();
@@ -128,7 +140,7 @@ public class UrunController : Controller
             KategoriId = i.KategoriId
 
 
-        }).FirstOrDefault(i=> i.Id ==id);
+        }).FirstOrDefault(i => i.Id == id);
 
         ViewBag.Kategoriler = db.Kategoriler.ToList();
 
@@ -137,7 +149,7 @@ public class UrunController : Controller
         return View(sorgu);
     }
     [HttpPost]
-    public async Task<ActionResult> UrunGuncelle(int id,UrunUpdateModel model)
+    public async Task<ActionResult> UrunGuncelle(int id, UrunUpdateModel model)
     {
 
 
@@ -154,8 +166,8 @@ public class UrunController : Controller
 
             if (model.ResimDosyasi != null)
             {
-                var fileName = Path.GetRandomFileName() + ".jpg";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img",fileName);
+                var fileName = Path.GetRandomFileName() + ".jpeg";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
 
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
@@ -182,6 +194,27 @@ public class UrunController : Controller
         }
 
         return View(model);
+    }
+
+    public ActionResult UrunSil(int? id)
+    {
+        if (id == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        var entity = db.Urunler.Find(id);
+        var silinen  = entity.UrunAdi;
+
+        if (entity != null)
+        {
+            db.Urunler.Remove(entity);
+            db.SaveChanges();
+
+            TempData["Mesaj"] = $"{silinen} Ürünü baþarýyla silindi";
+        }
+
+        return RedirectToAction("Index");
     }
 
 }

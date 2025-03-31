@@ -1,4 +1,7 @@
-﻿<div class="row">
+﻿@model Urun
+
+
+<div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow py-2">
             <div class="card-body">
@@ -30,6 +33,9 @@
             </div>
         </div>
     </div>
+    @{
+        var urunler = (List<Urun>)ViewData["Urunler"]!;
+    
 
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-warning shadow py-2">
@@ -37,7 +43,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col">
                         <div class="fw-bold text-primary text-uppercase mb-1">Ürün</div>
-                        <div class="h5 mb-0 fw-bold">215</div>
+                        <div class="h5 mb-0 fw-bold">@urunler.Count</div>
                     </div>
                     <div class="col-auto">
                         <i class="fa-solid fa-list fa-2x text-gray-300"></i>
@@ -46,7 +52,7 @@
             </div>
         </div>
     </div>
-
+    }
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow py-2">
             <div class="card-body">
