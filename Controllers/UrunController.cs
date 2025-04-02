@@ -82,6 +82,7 @@ public class UrunController : Controller
     [HttpPost]
     public async Task<ActionResult> Urunkaydet(UrunCreateModel model)
     {
+      
         var filename = Path.GetRandomFileName() + ".jpeg";
         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", filename);
 
@@ -120,7 +121,8 @@ public class UrunController : Controller
         return RedirectToAction("Index");
     }
     public ActionResult UrunGuncelle(int id)
-    {
+    {    
+        //textlere verileri getirir
         var sorgu = db.Urunler.Select(i => new UrunUpdateModel
         {
             Id = i.Id,
@@ -153,6 +155,7 @@ public class UrunController : Controller
 
         var sorgu = db.Urunler.FirstOrDefault(i => i.Id == model.Id);
         var eskiurun = sorgu.UrunAdi;
+
         if (sorgu != null)
         {
 

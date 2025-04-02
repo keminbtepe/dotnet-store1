@@ -14,7 +14,7 @@ namespace dotnet_store.ViewComponents;
     public IViewComponentResult Invoke()
     {
 
-        return View(_context.Sliderlar.ToList());
+        return View(_context.Sliderlar.Where(i => i.Aktif).OrderBy(i => i.Index).ToList());
     }
 }
 

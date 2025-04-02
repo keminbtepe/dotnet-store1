@@ -1,11 +1,10 @@
 ﻿namespace dotnet_store.Models;
 
-public class SliderGetModell
+public class SliderCreateModel
 {
-    public int Id { get; set; }
+    public IFormFile Resim { get; set; } = null!;
 
-    public string Resim { get; set; } = null!;
-
+    public string Aciklama { get; set; }
     public string? Baslik { get; set; }
 
     public int Index { get; set; }

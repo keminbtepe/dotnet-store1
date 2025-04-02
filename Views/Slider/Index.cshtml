@@ -1,4 +1,4 @@
-﻿@model List<SliderGetModel>
+﻿@model List<SliderGetModell>
 @{
     Layout = "_AdminLayout";
 }   @* layout *@
@@ -22,7 +22,7 @@
                                 <th>Başlık</th>
                                 <th>Aktif</th>
                                 <th>Index</th>
-                                <th style="width: 50px;"></th>
+                                <th style="width: 90px;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,12 +36,23 @@
                                     </td>
                                     <td>@slider.Baslik</td>
                                     <td>
-                                        <i class="fa-solid fa-circle-check text-success"></i>
+                                        @if (slider.Aktif)
+                                        {
+                                            <i class="fa-solid fa-circle-check text-success"></i>
+
+                                        }
+                                        else
+                                        {
+                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                        }
                                     </td>
-                                    <td>1</td>
+                                    <td>@slider.Index</td>
                                     <td>
-                                        <a href="kategori-ekle.html" class="btn btn-primary btn-sm">
+                                        <a asp-action="Edit" asp-route-id="@slider.Id" class="btn btn-primary btn-sm">
                                             <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@slider.Id" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
