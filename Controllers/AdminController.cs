@@ -12,8 +12,15 @@ public class AdminController : Controller
     }
     public IActionResult Index()
     {
-        ViewData["Urunler"] = db.Urunler.ToList();
-        return View();
+        var model = new AdminIndexViewModel();
+        model.Urunler = db.Urunler.ToList();   
+        model.Kategoriler = db.Kategoriler.ToList();
+        model.Mesaj = "Hoşgeldiniz";
+
+        ViewBag.Mesaj = "bu bir viewbagdan gelen mesaj";
+        ViewBag.Urunler = db.Urunler.ToList();
+
+        return View(model);
     }
 }
 
