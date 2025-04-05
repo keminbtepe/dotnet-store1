@@ -16,6 +16,17 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    //þifre zorunluluk ayarlarý; hata verdirmek istersek bunlarý true yapabiliriz
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 2;
+    options.Password.RequiredUniqueChars = 1;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
