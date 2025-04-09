@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IdentityUser>
+﻿@model IEnumerable<AppUser>
 @{
     Layout = "_AdminLayout";
 }
@@ -20,7 +20,7 @@
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="width: 50px;">Id</th>
-                                    <th style="width: 25px">Username</th>
+                                    <th style="width: 25px">Ad Soyad</th>
                                     <th style ="width: 25px">Email</th>
                                     <th style="width: 10px"></th>
                                 </tr>
@@ -33,7 +33,7 @@
                                     <tr>
                                         <td>@user.Id</td>
                                         <td>
-                                            <a href="#">@user.UserName</a>
+                                            <a href="#">@user.AdSoyad</a>
                                         </td>
                                         <td>@user.Email</td>
 

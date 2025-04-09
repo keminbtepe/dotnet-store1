@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using dotnet_store.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_store.Controllers;
 
 public class UserController : Controller
 {
-    private UserManager<IdentityUser> _userManager;
+    private UserManager<AppUser> _userManager;
 
-    public UserController(UserManager<IdentityUser> userManager)
+    public UserController(UserManager<AppUser> userManager)
     {
         _userManager = userManager;
     }

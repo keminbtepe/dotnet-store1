@@ -1,4 +1,4 @@
-﻿@model AccountCreateModel
+﻿@model AccountLoginModel
 
 @section Bar {
 
@@ -10,7 +10,7 @@
                         <a href="/Home/Index">Anasayfa</a>
                     </li>
                     <li class="breadcrumb-item">
-                        Kayıt Ol
+                        Kullanıcı Giriş
                     </li>
                 </ol>
             </nav>
@@ -24,17 +24,12 @@
             <div class="col-7 ">
                 <div class="card card body">
                     <div class="card-header py-1 d-flex justify-content-between align-items-center">
-                        <h5 class="card-title">Kayıt Ol</h5>
+                        <h5 class="card-title">Giriş Yap</h5>
                     </div>
-                    <div class="card-body"> 
-                        
+                    <div class="card-body">
+
                         <form method="post" novalidate>
                             <div asp-validation-summary="All" class="text-danger"></div>
-                            <div class="mb-3">
-                                <label asp-for="AdSoyad" class="form-label"></label>
-                                <input asp-for="AdSoyad" class="form-control">
-                                <span asp-validation-for="AdSoyad" class="text-danger"></span>
-                            </div>
 
                             <div class="mb-3">
                                 <label asp-for="Email" class="form-label"></label>
@@ -46,12 +41,13 @@
                                 <input asp-for="Password" class="form-control">
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
-                            <div class="mb-3">
-                                <label asp-for="ConfirmPassword" class="form-label"></label>
-                                <input asp-for="ConfirmPassword" class="form-control">
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            <div class="mb-3 form-check">
+                                <input asp-for="BeniHatırla" class="form-check-input">
+                                <label asp-for="BeniHatırla" class="form-check-label"></label>
+                                <span asp-validation-for="BeniHatırla" class="text-danger"></span>
                             </div>
                             <button type="submit" class="btn btn-primary">Kaydet</button>
+
                         </form>
 
                     </div>

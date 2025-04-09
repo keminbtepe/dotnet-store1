@@ -7,9 +7,9 @@ public class AccountCreateModel
 {
 
     [Required]
-    [Display(Name = "Kullanıcı Adı")]
+    [Display(Name = "Ad Soyad")]
     //[RegularExpression("^[a-Za-Z0-9]*$", ErrorMessage = "Sadece Sayı Ve Harf Giriniz")]
-    public string Username { get; set; } = null!;
+    public string AdSoyad { get; set; } = null!;
 
     [Required]
     [Display(Name = "Email")]

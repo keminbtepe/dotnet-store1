@@ -13,7 +13,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(connectionString);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>()
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -25,6 +25,15 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 2;
     options.Password.RequiredUniqueChars = 1;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; //giriþ yapmadýgýnda yönlendirecegi sayfa
+    options.LogoutPath = "/Admin/Logout"; //çýkýþ yaptýgýnda yönlendirecegi sayfa
+    options.AccessDeniedPath = "/Admin/AccessDenied"; //yetkisi olmayan sayfaya girmeye çalýþtýgýnda yönlendirecegi sayfa
+    options.ExpireTimeSpan = TimeSpan.FromDays(30); //çerez süresi 30 gün giriþ yapmasýna gerek kalmaz
+    options.SlidingExpiration = true; //çerez süresi dolmadan 30 gün daha ekler hareket algýlarsa süreyi uzatýr
 });
 
 var app = builder.Build();

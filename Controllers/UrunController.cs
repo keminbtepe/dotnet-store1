@@ -26,7 +26,7 @@ public class UrunController : Controller
             .Include(i => i.Kategori)
             .ToList();
 
-        ViewBag.Kategoriler = new SelectList(db.Kategoriler.ToList(),"Id","KategoriAdi",kategori);  //dropdown listesi içindeki verileri çeker
+        ViewBag.Kategoriler = new SelectList(db.Kategoriler.ToList(), "Id", "KategoriAdi", kategori);  //dropdown listesi içindeki verileri çeker
 
         return View(urunListesi);
 
@@ -82,7 +82,7 @@ public class UrunController : Controller
     [HttpPost]
     public async Task<ActionResult> Urunkaydet(UrunCreateModel model)
     {
-      
+
         var filename = Path.GetRandomFileName() + ".jpeg";
         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", filename);
 
@@ -121,7 +121,7 @@ public class UrunController : Controller
         return RedirectToAction("Index");
     }
     public ActionResult UrunGuncelle(int id)
-    {    
+    {
         //textlere verileri getirir
         var sorgu = db.Urunler.Select(i => new UrunUpdateModel
         {
@@ -200,7 +200,7 @@ public class UrunController : Controller
         }
 
         var entity = db.Urunler.Find(id);
-        var silinen  = entity.UrunAdi;
+        var silinen = entity.UrunAdi;
 
         if (entity != null)
         {
